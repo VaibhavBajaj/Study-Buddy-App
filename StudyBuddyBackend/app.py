@@ -1,21 +1,19 @@
+from auth_constants import AUTH_KEY
+from auth_constants import FIREBASE_CONFIG
+from constants import COURSE_API, COURSE_SEARCH_STRING
+from constants import DEPARTMENT_API, DEPARTMENT_SEARCH_STRING
+from constants import SECTION_API, SECTION_SEARCH_STRING
+from constants import SEMESTER
 from course_parser import CourseParser
-from constants import FIREBASE_URL, AUTH_PASS, AUTH_EMAIL
 from datetime import datetime
-from firebase.firebase import FirebaseApplication, FirebaseAuthentication
+from firebase_admin import initialize_app
+from firebase_admin import credentials
+from firebase_admin import db
 
-database = FirebaseApplication(FIREBASE_URL, None)
-database.authentication = FirebaseAuthentication(AUTH_PASS, AUTH_EMAIL)
+cred = credentials.Certificate(AUTH_KEY)
+app = initialize_app(cred, FIREBASE_CONFIG)
 
-DEPARTMENT_SEARCH_STRING = 'subject'
-DEPARTMENT_API = 'departments'
-
-COURSE_SEARCH_STRING = 'course'
-COURSE_API = 'courses/{0}'
-
-SECTION_SEARCH_STRING = 'section'
-SECTION_API = 'sections/{0}/{1}'
-
-SEMESTER = "fall"
+database = db.reference('', app)
 
 
 def post_data_to_firebase():
@@ -26,26 +24,28 @@ def post_data_to_firebase():
     departments = course_parser.get_item_list(DEPARTMENT_SEARCH_STRING)
     for department in departments:
         department_id = department['id']
-        database.put(DEPARTMENT_API, department['id'], department)
+        department_ref = database.child(DEPARTMENT_API.format(department_id))
+        department_ref.set(department)
 
         courses = course_parser.get_item_list(COURSE_SEARCH_STRING, department_id)
         for course in courses:
             course_id = course['id']
-            database.put(COURSE_API.format(department_id), course_id, course)
+            course_ref = database.child(COURSE_API.format(department_id, course_id))
+            course_ref.set(course)
 
             sections = course_parser.get_item_list(SECTION_SEARCH_STRING, department_id, course_id)
             for section in sections:
                 section_id = section['id']
+                section_ref = database.child(SECTION_API.format(department_id, course_id, section_id))
                 section_details = course_parser.get_section_details(department_id, course_id, section_id)
-                database.put(SECTION_API.format(department_id, course_id), section_id, section_details)
+                section_ref.set(section_details)
 
 
 def wipe_firebase_data():
-    database.delete('/', None)
+    database.delete()
 
 
 def main():
-    # wipe_firebase_data()
     post_data_to_firebase()
 
 

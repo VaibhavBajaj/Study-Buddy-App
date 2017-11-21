@@ -32,7 +32,6 @@ class CourseParser:
         if root is None:
             return data
 
-
         for item in root.iter(key):
             item_data = dict()
             item_data['id'] = item.get('id')
