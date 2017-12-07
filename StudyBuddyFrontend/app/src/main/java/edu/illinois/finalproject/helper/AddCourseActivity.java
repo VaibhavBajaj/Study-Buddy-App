@@ -1,5 +1,6 @@
-package edu.illinois.finalproject;
+package edu.illinois.finalproject.helper;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +19,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.illinois.finalproject.R;
+import edu.illinois.finalproject.home.HomeActivity;
 import edu.illinois.finalproject.parser.Course;
 import edu.illinois.finalproject.parser.Department;
 import edu.illinois.finalproject.parser.Section;
@@ -56,6 +59,17 @@ public class AddCourseActivity extends AppCompatActivity {
 
         deptAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         mDeptSpinner.setAdapter(deptAdapter);
+
+        mAddCourseButton = (Button) findViewById(R.id.add_course_button);
+        mAddCourseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent launchCoursesIntent = new Intent(AddCourseActivity.this,
+                        HomeActivity.class);
+                launchCoursesIntent.putExtra(HomeActivity.TAB_KEY, HomeActivity.COURSES_TAB);
+                startActivity(launchCoursesIntent);
+            }
+        });
     }
 
     private void updateDepartmentList(final ArrayAdapter<Department> deptAdapter) {

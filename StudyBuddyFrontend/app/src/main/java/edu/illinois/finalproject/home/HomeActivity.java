@@ -15,7 +15,13 @@ import edu.illinois.finalproject.auth.SignInActivity;
 
 public class HomeActivity extends AppCompatActivity {
 
-    public static final String CURRENT_TAB = "CurrentTab";
+    public static final String TAB_KEY = "CurrentTab";
+
+    public static final int HOME_TAB = 0;
+    public static final int COURSES_TAB = 1;
+    public static final int BUDDY_TAB = 2;
+    public static final int MEETING_TAB = 3;
+
     private FirebaseAuth mAuth;
     private FirebaseUser mFirebaseUser;
     private TabLayout mTabLayout;
@@ -48,7 +54,7 @@ public class HomeActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
 
         Intent intent = getIntent();
-        viewPager.setCurrentItem(intent.getIntExtra(CURRENT_TAB, 0));
+        viewPager.setCurrentItem(intent.getIntExtra(TAB_KEY, HOME_TAB));
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

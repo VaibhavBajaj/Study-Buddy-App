@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.illinois.finalproject.AddCourseActivity">
+    tools:context="edu.illinois.finalproject.helper.AddCourseActivity">
 
     <TextView
         android:id="@+id/dept_label"
@@ -71,6 +71,7 @@
     <Button
         android:id="@+id/add_course_button"
         android:text="@string/add_course"
+        android:textSize="20sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

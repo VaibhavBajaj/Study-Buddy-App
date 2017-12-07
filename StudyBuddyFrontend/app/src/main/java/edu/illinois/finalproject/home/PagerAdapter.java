@@ -16,16 +16,16 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch(position) {
-            case 0:
+            case HomeActivity.HOME_TAB:
                 HomeTabFragment homeTabFragment = new HomeTabFragment();
                 return homeTabFragment;
-            case 1:
+            case HomeActivity.COURSES_TAB:
                 CoursesTabFragment coursesTabFragment = new CoursesTabFragment();
                 return coursesTabFragment;
-            case 2:
+            case HomeActivity.BUDDY_TAB:
                 BuddyTabFragment buddyTabFragment = new BuddyTabFragment();
                 return buddyTabFragment;
-            case 3:
+            case HomeActivity.MEETING_TAB:
                 MeetingTabFragment meetingTabFragment = new MeetingTabFragment();
                 return meetingTabFragment;
             default:

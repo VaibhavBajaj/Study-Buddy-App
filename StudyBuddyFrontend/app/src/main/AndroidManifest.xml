@@ -12,13 +12,17 @@
         <activity android:name=".home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".auth.SignInActivity" />
         <activity android:name=".UserSessionManager" />
-        <activity android:name=".AddCourseActivity" />
+        <activity android:name=".helper.AddCourseActivity" />
         <activity android:name=".auth.SignUpActivity" />
+        <activity android:name=".helper.AddMeetingActivity" />
+        <activity android:name=".helper.AddBuddyActivity" />
+        <activity android:name=".helper.BuddyDetailsActivity"></activity>
     </application>
 
 </manifest>

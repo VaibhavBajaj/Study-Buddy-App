@@ -31,7 +31,22 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="add_course">Add the course</string>
+    <string name="add_course">Add course</string>
     <string name="add_button">+</string>
+    <string name="add_buddy_button">Add buddy</string>
+    <string name="buddy_tab_title">Buddy List</string>
+    <string name="courses_tab_title">Course List</string>
+    <string name="meeting_tab_title">Future Meetings</string>
+    <string name="add_buddy_title">Choose a buddy</string>
+    <string name="find_buddy_button">Find a buddy</string>
+    <string name="buddy_name">Buddy Name</string>
+    <string name="buddy_courses">Buddy Courses</string>
+    <string name="buddy_location">Buddy Location</string>
+    <string name="meeting_label">Meeting Details</string>
+    <string name="add_meeting_name_label">Add a meeting</string>
+    <string name="add_meeting_name_text">Meeting name</string>
+    <string name="add_meeting_location_label">Location</string>
+    <string name="add_meeting_location_text">Where to meet</string>
+    <string name="add_meeting_button">Set Meeting</string>
 
 </resources>
