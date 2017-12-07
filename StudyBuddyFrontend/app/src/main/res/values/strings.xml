@@ -1,3 +1,37 @@
 <resources>
-    <string name="app_name">FinalProject</string>
+    <string name="app_name">Study Buddy</string>
+
+    <string name="google_web_client_id" translatable="false">321420456558-9jpd194t1rh3p8gku7pc0mpnncvggitq.apps.googleusercontent.com</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb1790276697930225</string>
+
+    <string name="title_activity_auth">AuthActivity</string>
+    <string name="welcome_text">Welcome, %s</string>
+    <string name="sign_out">Sign out</string>
+    <string name="department_name">Department: </string>
+    <string name="sign_in">Sign In</string>
+    <string name="create_account">Create an Account</string>
+    <string name="location">Location</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="course_name">Course:</string>
+    <string name="section_name">Section:</string>
+    <string name="inform_user">You don\'t have a registered account</string>
+    <string name="error_no_location">No location value entered</string>
+
+    <string-array name="location_array">
+        <item>North Campus (Apts. near Matthews Ave)</item>
+        <item>North-East Campus (ISR, Daniels, nearby apts.)</item>
+        <item>North-West Campus (Apts. near Green and 6th)</item>
+        <item>West Campus (Sherman hall, nearby apts.)</item>
+        <item>South-West Campus (Ikenberry halls, nearby apts.)</item>
+        <item>South Campus (Apts. near Penn. Ave)</item>
+        <item>South-East Campus (PAR, FAR, nearby apts.)</item>
+        <item>East Campus (LAR, Busy-Evans, nearby apts.)</item>
+    </string-array>
+    <string name="title_activity_main">MainActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_course">Add the course</string>
+    <string name="add_button">+</string>
+
 </resources>
