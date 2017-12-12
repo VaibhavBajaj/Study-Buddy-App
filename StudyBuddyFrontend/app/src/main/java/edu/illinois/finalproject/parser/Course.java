@@ -6,7 +6,6 @@ package edu.illinois.finalproject.parser;
 public class Course {
     String id;
     String name;
-    String deptName;
 
     public String getId() {
         return id;
@@ -15,12 +14,8 @@ public class Course {
         return name;
     }
 
-    public void setDeptName(String deptName) {
-        this.deptName = deptName;
-    }
-
     @Override
     public String toString() {
-        return deptName + " " + id  + " - " + name;
+        return id  + " - " + name;
     }
 }

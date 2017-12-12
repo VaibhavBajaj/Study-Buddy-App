@@ -42,11 +42,17 @@
     <string name="buddy_name">Buddy Name</string>
     <string name="buddy_courses">Buddy Courses</string>
     <string name="buddy_location">Buddy Location</string>
-    <string name="meeting_label">Meeting Details</string>
-    <string name="add_meeting_name_label">Add a meeting</string>
-    <string name="add_meeting_name_text">Meeting name</string>
-    <string name="add_meeting_location_label">Location</string>
-    <string name="add_meeting_location_text">Where to meet</string>
+    <string name="meeting_details_label">Meeting Details</string>
+
+    <string name="meeting_name">Meeting name</string>
+    <string name="meeting_location">Location</string>
+    <string name="meeting_time">Time of Meeting</string>
+    <string name="add_meeting_name_hint">Name of meeting</string>
+    <string name="add_meeting_location_hint">Where to meet</string>
+    <string name="add_meeting_time_hint">Eg: 7:30am, 2:00pm</string>
     <string name="add_meeting_button">Set Meeting</string>
+
+    <string name="course_id">Course Id:</string>
+    <string name="course_dates">Start/End Date</string>
 
 </resources>

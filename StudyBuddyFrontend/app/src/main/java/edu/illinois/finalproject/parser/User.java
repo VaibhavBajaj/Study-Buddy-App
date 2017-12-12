@@ -3,9 +3,10 @@ package edu.illinois.finalproject.parser;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class User implements Parcelable {
+public class User {
 
     private String id;
     private List<String> courses;
@@ -21,51 +22,27 @@ public class User implements Parcelable {
         this.location = location;
     }
 
-    protected User(Parcel in) {
-        id = in.readString();
-        courses = in.createStringArrayList();
-        buddies = in.createStringArrayList();
-        location = in.readString();
-    }
-
-    public static final Creator<User> CREATOR = new Creator<User>() {
-        @Override
-        public User createFromParcel(Parcel in) {
-            return new User(in);
-        }
-
-        @Override
-        public User[] newArray(int size) {
-            return new User[size];
-        }
-    };
-
     public String getId() {
         return id;
     }
 
     public List<String> getCourses() {
+        if (courses == null) {
+            return new ArrayList<>();
+        }
+
         return courses;
     }
 
     public List<String> getBuddies() {
+        if (buddies == null) {
+            return new ArrayList<>();
+        }
+
         return buddies;
     }
 
     public String getLocation() {
         return location;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(id);
-        parcel.writeStringList(courses);
-        parcel.writeStringList(buddies);
-        parcel.writeString(location);
     }
 }

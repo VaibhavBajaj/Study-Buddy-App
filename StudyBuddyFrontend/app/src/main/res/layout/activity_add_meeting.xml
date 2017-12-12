@@ -11,9 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="35sp"
-        android:text="@string/meeting_label"
+        android:text="@string/meeting_details_label"
         app:layout_constraintBottom_toTopOf="@id/add_meeting_name_label"
-        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
@@ -22,8 +22,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="25sp"
-        android:text="@string/add_meeting_name_label"
-        app:layout_constraintBottom_toTopOf="@id/add_meeting_location_label"
+        android:text="@string/meeting_name"
+        app:layout_constraintBottom_toBottomOf="@id/add_meeting_location_label"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/add_meeting_name_text"
         app:layout_constraintTop_toBottomOf="@id/add_meeting_label"/>
@@ -32,42 +32,55 @@
         android:id="@+id/add_meeting_name_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/add_meeting_name_text"
-        app:layout_constraintBottom_toTopOf="@id/add_meeting_location_text"
+        android:hint="@string/add_meeting_name_hint"
+        app:layout_constraintBottom_toBottomOf="@id/add_meeting_name_label"
         app:layout_constraintLeft_toRightOf="@id/add_meeting_name_label"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_meeting_label"/>
+        app:layout_constraintRight_toRightOf="parent"/>
 
     <TextView
         android:id="@+id/add_meeting_location_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="25sp"
-        android:text="@string/add_meeting_location_label"
-        app:layout_constraintBottom_toTopOf="@id/add_meeting_buddies"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/add_meeting_location_text"
+        android:text="@string/meeting_location"
+        app:layout_constraintBottom_toTopOf="@id/add_meeting_time_label"
+        app:layout_constraintLeft_toLeftOf="@id/add_meeting_name_label"
         app:layout_constraintTop_toBottomOf="@id/add_meeting_name_label"/>
 
     <EditText
         android:id="@+id/add_meeting_location_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/add_meeting_location_text"
-        app:layout_constraintBottom_toTopOf="@id/add_meeting_buddies"
-        app:layout_constraintLeft_toRightOf="@id/add_meeting_location_label"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/add_meeting_name_text"/>
+        android:hint="@string/add_meeting_location_hint"
+        app:layout_constraintBottom_toBottomOf="@id/add_meeting_location_label"
+        app:layout_constraintLeft_toLeftOf="@id/add_meeting_name_text"/>
 
-    <ListView
+    <TextView
+        android:id="@+id/add_meeting_time_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:text="@string/meeting_time"
+        app:layout_constraintBottom_toTopOf="@id/add_meeting_buddies"
+        app:layout_constraintLeft_toLeftOf="@id/add_meeting_location_label"
+        app:layout_constraintTop_toBottomOf="@id/add_meeting_location_label"/>
+
+    <EditText
+        android:id="@+id/add_meeting_time_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/add_meeting_time_hint"
+        app:layout_constraintBottom_toBottomOf="@id/add_meeting_time_label"
+        app:layout_constraintLeft_toLeftOf="@id/add_meeting_location_text"/>
+
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/add_meeting_buddies"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="15dp"
-        app:layout_constraintBottom_toTopOf="@id/add_meeting_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/add_meeting_time_label"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_meeting_location_label" />
+        app:layout_constraintBottom_toTopOf="@id/add_meeting_button" />
 
     <Button
         android:id="@+id/add_meeting_button"

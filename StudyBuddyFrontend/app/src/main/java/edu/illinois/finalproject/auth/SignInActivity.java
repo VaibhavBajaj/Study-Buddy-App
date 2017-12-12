@@ -28,6 +28,7 @@ import edu.illinois.finalproject.home.HomeActivity;
 public class SignInActivity extends AppCompatActivity {
 
     private SignInButton mSignInButton;
+    private UserSessionManager mUserSessionManager;
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
 
@@ -39,7 +40,8 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        mGoogleApiClient = new UserSessionManager(this).getGoogleApiClient();
+        mUserSessionManager =  new UserSessionManager(this);
+        mGoogleApiClient = mUserSessionManager.getGoogleApiClient();
 
         mAuth = FirebaseAuth.getInstance();
         mSignInButton = (SignInButton) findViewById(R.id.sign_in_button);
@@ -63,19 +65,15 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
-
         if (result.isSuccess()) {
             GoogleSignInAccount account = result.getSignInAccount();
-            Log.d(TAG, "Account registered under id: " + account.getId());
             firebaseAuthWithGoogle(account);
         } else {
-            Log.d(TAG, "Authentication failed");
+            Log.w(TAG, "Authentication failed");
         }
     }
 
     private void firebaseAuthWithGoogle(final GoogleSignInAccount account) {
-        Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
-
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         mAuth.signInWithCredential(credential)
             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -83,11 +81,12 @@ public class SignInActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
+                        UserSessionManager.initUser(context);
                         Intent launchHomePageIntent = new Intent(context, HomeActivity.class);
                         context.startActivity(launchHomePageIntent);
                     } else {
                         // If sign in fails, display a message to the user.
-                        Log.w(TAG, "signInWithCredential:failure", task.getException());
+                        Log.w(TAG, "Sign In Failure", task.getException());
                         Toast.makeText(SignInActivity.this, "Sign in failed.",
                                 Toast.LENGTH_LONG).show();
                     }

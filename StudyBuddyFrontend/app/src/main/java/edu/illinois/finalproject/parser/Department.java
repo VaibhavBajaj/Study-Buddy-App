@@ -1,5 +1,8 @@
 package edu.illinois.finalproject.parser;
 
+import android.support.annotation.NonNull;
+
+
 /**
  * An individual department's details
  */
@@ -17,6 +20,6 @@ public class Department {
 
     @Override
     public String toString() {
-        return id;
+        return id + " - " + name;
     }
 }

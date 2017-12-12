@@ -13,17 +13,23 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import edu.illinois.finalproject.auth.SignInActivity;
+import edu.illinois.finalproject.auth.SignUpActivity;
+import edu.illinois.finalproject.parser.User;
 
 public class UserSessionManager extends FragmentActivity
         implements GoogleApiClient.OnConnectionFailedListener {
 
     private Context mContext;
     private GoogleApiClient mGoogleApiClient;
+    private static User mUser = null;
     private static final String TAG = UserSessionManager.class.getSimpleName();
-
-    public UserSessionManager() {}
 
     public UserSessionManager(Context context) {
         mContext = context;
@@ -48,6 +54,37 @@ public class UserSessionManager extends FragmentActivity
                 .build();
 
         mGoogleApiClient.connect();
+
+
+    }
+
+    public static void initUser(final Context context) {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("students")
+                .child(auth.getUid());
+        Log.d(TAG, auth.getUid());
+        dbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() == null) {
+                    Intent launchSignUpIntent = new Intent(context, SignUpActivity.class);
+                    context.startActivity(launchSignUpIntent);
+                } else {
+                    mUser = dataSnapshot.getValue(User.class);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
+
+    public static User getUser(final Context context) {
+        if (mUser == null) {
+            initUser(context);
+        }
+
+        return mUser;
     }
 
     public GoogleApiClient getGoogleApiClient() {

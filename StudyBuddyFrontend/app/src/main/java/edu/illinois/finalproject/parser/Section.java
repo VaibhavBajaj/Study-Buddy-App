@@ -53,4 +53,9 @@ public class Section {
     public List<String> getInstructors() {
         return instructors;
     }
+
+    @Override
+    public String toString() {
+        return crn + " - " + section;
+    }
 }
