@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
@@ -27,9 +28,9 @@ public class HomeTabFragment extends Fragment {
     private ImageView mProfileImage;
     private Button mSignOutButton;
 
-    private UserSessionManager mUserSessionManager;
     private FirebaseAuth mAuth;
     private FirebaseUser mFirebaseUser;
+    private GoogleApiClient mGoogleApiClient;
     private User mUser = null;
 
     private Context mContext;
@@ -43,6 +44,7 @@ public class HomeTabFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mAuth.getCurrentUser();
+        mGoogleApiClient = UserSessionManager.getGoogleApiClient(mContext);
 
         mUser = UserSessionManager.getUser(mContext);
 
@@ -55,12 +57,11 @@ public class HomeTabFragment extends Fragment {
         Picasso.with(mContext).load(mFirebaseUser.getPhotoUrl()).into(mProfileImage);
         mProfileImage.setVisibility(ImageView.VISIBLE);
 
-        mUserSessionManager = new UserSessionManager(mContext);
         mSignOutButton = (Button) returnView.findViewById(R.id.sign_out_button);
         mSignOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mUserSessionManager.signOut();
+                UserSessionManager.signOut(mContext, mGoogleApiClient);
             }
         });
 

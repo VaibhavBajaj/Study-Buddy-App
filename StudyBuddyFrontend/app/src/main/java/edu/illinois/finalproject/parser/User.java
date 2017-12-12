@@ -11,14 +11,17 @@ public class User {
     private String id;
     private List<String> courses;
     private List<String> buddies;
+    private List<String> meetings;
     private String location;
 
     public User() {}
 
-    public User(String id, List<String> courses, List<String> buddies, String location) {
+    public User(String id, List<String> courses, List<String> buddies, List<String> meetings,
+                String location) {
         this.id = id;
         this.courses = courses;
         this.buddies = buddies;
+        this.meetings = meetings;
         this.location = location;
     }
 
@@ -44,5 +47,13 @@ public class User {
 
     public String getLocation() {
         return location;
+    }
+
+    public List<String> getMeetings() {
+        if (meetings == null) {
+            return new ArrayList<>();
+        }
+
+        return meetings;
     }
 }

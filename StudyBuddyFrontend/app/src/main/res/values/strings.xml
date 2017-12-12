@@ -53,6 +53,9 @@
     <string name="add_meeting_button">Set Meeting</string>
 
     <string name="course_id">Course Id:</string>
-    <string name="course_dates">Start/End Date</string>
+    <string name="course_dates">Start/End Date:</string>
+    <string name="remove_course_button">Remove course</string>
+    <string name="course_crn">Crn:</string>
+    <string name="course_instructors">Instructors:</string>
 
 </resources>

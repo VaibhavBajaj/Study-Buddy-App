@@ -36,6 +36,7 @@ public class AddCourseActivity extends AppCompatActivity {
     private static final String TAG = AddCourseActivity.class.getSimpleName();
     private final FirebaseDatabase db = FirebaseDatabase.getInstance();
     private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
     private User mUser;
 
     private Spinner mDeptSpinner;
@@ -50,6 +51,7 @@ public class AddCourseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_course);
 
         mUser = UserSessionManager.getUser(this);
+
         final List<Department> deptList = new ArrayList<>();
         final List<Course> courseList = new ArrayList<>();
         final List<Section> sectionList = new ArrayList<>();
@@ -105,10 +107,19 @@ public class AddCourseActivity extends AppCompatActivity {
         mAddCourseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String courseSectionAdded =
+                String sectionDept =
+                        deptList.get(mDeptSpinner.getSelectedItemPosition()).getId();
+                String sectionCourse =
+                        courseList.get(mCourseSpinner.getSelectedItemPosition()).getId();
+                String sectionCrn =
                         sectionList.get(mSectionSpinner.getSelectedItemPosition()).getCrn();
+                String addedCourseApi = sectionDept + "/" + sectionCourse + "/" + sectionCrn;
+
                 List<String> courses = mUser.getCourses();
-                courses.add(courseSectionAdded);
+                if (!courses.contains(addedCourseApi)) {
+                    courses.add(addedCourseApi);
+                }
+
                 Map<String, Object> courseUpdateMap = new HashMap<>();
                 courseUpdateMap.put("courses", courses);
                 db.getReference("students").child(mAuth.getUid()).updateChildren(courseUpdateMap);

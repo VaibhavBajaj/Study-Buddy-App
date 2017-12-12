@@ -60,8 +60,13 @@ public class SignUpActivity extends AppCompatActivity {
                     return;
                 }
                 String userLocation = mLocationSpinner.getSelectedItem().toString();
-                User currentUser = new User(mAuth.getUid(), new ArrayList<String>(),
-                        new ArrayList<String>(), userLocation);
+                User currentUser = new User(
+                        mAuth.getUid(),             // Id
+                        new ArrayList<String>(),    // Courses
+                        new ArrayList<String>(),    // Buddies
+                        new ArrayList<String>(),    // Meetings
+                        userLocation                // Location
+                );
 
                 final FirebaseDatabase db = FirebaseDatabase.getInstance();
                 final DatabaseReference studentRef = db.getReference("students");

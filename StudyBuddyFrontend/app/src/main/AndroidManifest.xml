@@ -22,7 +22,8 @@
         <activity android:name=".auth.SignUpActivity" />
         <activity android:name=".helper.AddMeetingActivity" />
         <activity android:name=".helper.AddBuddyActivity" />
-        <activity android:name=".helper.BuddyDetailsActivity"></activity>
+        <activity android:name=".helper.BuddyDetailedActivity" />
+        <activity android:name=".helper.CourseDetailedActivity"></activity>
     </application>
 
 </manifest>

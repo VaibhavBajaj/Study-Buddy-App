@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import edu.illinois.finalproject.R;
 
-public class BuddyDetailsActivity extends AppCompatActivity {
+public class BuddyDetailedActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

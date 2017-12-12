@@ -28,7 +28,6 @@ import edu.illinois.finalproject.home.HomeActivity;
 public class SignInActivity extends AppCompatActivity {
 
     private SignInButton mSignInButton;
-    private UserSessionManager mUserSessionManager;
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
 
@@ -40,8 +39,7 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        mUserSessionManager =  new UserSessionManager(this);
-        mGoogleApiClient = mUserSessionManager.getGoogleApiClient();
+        mGoogleApiClient = UserSessionManager.getGoogleApiClient(this);
 
         mAuth = FirebaseAuth.getInstance();
         mSignInButton = (SignInButton) findViewById(R.id.sign_in_button);

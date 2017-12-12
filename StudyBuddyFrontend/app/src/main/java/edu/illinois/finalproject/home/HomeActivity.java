@@ -7,10 +7,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import edu.illinois.finalproject.R;
+import edu.illinois.finalproject.UserSessionManager;
 import edu.illinois.finalproject.auth.SignInActivity;
 
 public class HomeActivity extends AppCompatActivity {
