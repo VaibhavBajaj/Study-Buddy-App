@@ -58,5 +58,6 @@
     <string name="course_crn">Crn:</string>
     <string name="course_instructors">Instructors:</string>
     <string name="remove_buddy_button">Remove Buddy</string>
+    <string name="meeting_buddy_list_label">Choose Buddies:</string>
 
 </resources>

@@ -36,7 +36,10 @@ public class AddBuddyActivity extends AppCompatActivity {
         initBuddyList();
 
         mBuddyOptionsList = new ArrayList<>();
-        mBuddyAdapter = new BuddyAdapter(mBuddyOptionsList, true);
+        mBuddyAdapter = new BuddyAdapter(
+                mBuddyOptionsList,
+                BuddyAdapter.LAUNCH_ADD_BUDDY_PAGE
+        );
 
         RecyclerView buddyOptionsRecyclerView =
                 (RecyclerView) findViewById(R.id.recycler_add_buddy_list);

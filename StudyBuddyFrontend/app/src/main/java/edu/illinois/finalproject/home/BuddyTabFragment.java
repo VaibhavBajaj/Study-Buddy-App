@@ -53,7 +53,7 @@ public class BuddyTabFragment extends Fragment {
 
         RecyclerView buddyRecyclerView = (RecyclerView) returnView
                 .findViewById(R.id.recycler_buddy_list);
-        mBuddyAdapter = new BuddyAdapter(mBuddyList, false);
+        mBuddyAdapter = new BuddyAdapter(mBuddyList, BuddyAdapter.LAUNCH_REMOVE_BUDDY_PAGE);
 
         buddyRecyclerView.setAdapter(mBuddyAdapter);
         buddyRecyclerView.setLayoutManager(

@@ -2,8 +2,8 @@ package edu.illinois.finalproject.home.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +20,18 @@ public class BuddyAdapter extends RecyclerView.Adapter<BuddyAdapter.BuddyViewHol
 
     private static final String TAG = BuddyAdapter.class.getSimpleName();
 
+    public static final int ALLOW_SELECTION = 1;
+    public static final int LAUNCH_ADD_BUDDY_PAGE = 2;
+    public static final int LAUNCH_REMOVE_BUDDY_PAGE = 3;
+
     public static final String USER_KEY = "User";
     private List<User> buddyList;
-    private boolean addBuddyOnClick;
+    private int selectedOption;
 
-    public BuddyAdapter(List<User> buddyList, boolean addBuddyOnClick) {
+
+    public BuddyAdapter(List<User> buddyList, int option) {
         this.buddyList = buddyList;
-        this.addBuddyOnClick = addBuddyOnClick;
+        this.selectedOption = option;
     }
 
     @Override
@@ -42,29 +47,40 @@ public class BuddyAdapter extends RecyclerView.Adapter<BuddyAdapter.BuddyViewHol
     }
 
     @Override
-    public void onBindViewHolder(BuddyViewHolder holder, int position) {
+    public void onBindViewHolder(final BuddyViewHolder holder, final int position) {
         final Context context = holder.itemView.getContext();
         final User user = buddyList.get(position);
 
         holder.buddyName.setText(user.getName());
-        holder.buddyCourses.setText(user.getCoursesStr());
+        holder.buddyCourses.setText(user.extractCoursesStr());
         holder.buddyLocation.setText(user.getLocation());
-
-        Log.d(TAG, String.valueOf(addBuddyOnClick));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (addBuddyOnClick) {
-                    Intent launchDetailedAddBuddyIntent = new Intent(context,
-                            AddBuddyDetailedActivity.class);
-                    launchDetailedAddBuddyIntent.putExtra(USER_KEY, user);
-                    context.startActivity(launchDetailedAddBuddyIntent);
-                } else {
-                    Intent launchDetailedBuddyIntent = new Intent(context,
+
+                switch (selectedOption) {
+                    case ALLOW_SELECTION:
+                        user.setSelected(!user.isSelected());
+
+                        holder.itemView.setBackgroundColor(
+                                user.isSelected() ? Color.rgb(248, 255, 204) : holder.itemView.getSolidColor()
+                        );
+                        break;
+                    case LAUNCH_ADD_BUDDY_PAGE:
+                        Intent launchDetailedAddBuddyIntent = new Intent(context,
+                                AddBuddyDetailedActivity.class);
+                        launchDetailedAddBuddyIntent.putExtra(USER_KEY, user);
+                        context.startActivity(launchDetailedAddBuddyIntent);
+                        break;
+                    case LAUNCH_REMOVE_BUDDY_PAGE:
+                        Intent launchDetailedBuddyIntent = new Intent(context,
                             BuddyDetailedActivity.class);
-                    launchDetailedBuddyIntent.putExtra(USER_KEY, user);
-                    context.startActivity(launchDetailedBuddyIntent);
+                        launchDetailedBuddyIntent.putExtra(USER_KEY, user);
+                        context.startActivity(launchDetailedBuddyIntent);
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Illegal argument sent to BuddyAdapter");
                 }
             }
         });

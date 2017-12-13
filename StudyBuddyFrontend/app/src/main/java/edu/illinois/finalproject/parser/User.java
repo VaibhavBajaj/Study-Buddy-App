@@ -14,6 +14,7 @@ public class User implements Parcelable {
     private List<String> buddies;
     private List<String> meetings;
     private String location;
+    private boolean isSelected;
 
     public User() {}
 
@@ -25,6 +26,7 @@ public class User implements Parcelable {
         this.buddies = buddies;
         this.meetings = meetings;
         this.location = location;
+        isSelected = false;
     }
 
     protected User(Parcel in) {
@@ -65,7 +67,7 @@ public class User implements Parcelable {
         return courseParts[0] + " " + courseParts[1];
     }
 
-    public String getCoursesStr() {
+    public String extractCoursesStr() {
         if (courses == null || courses.size() == 0) {
             return "None registered";
         }
@@ -101,6 +103,14 @@ public class User implements Parcelable {
 
     public String getName() {
         return name;
+    }
+
+    public void setSelected(boolean isSelected) {
+        this.isSelected = isSelected;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
     }
 
     @Override

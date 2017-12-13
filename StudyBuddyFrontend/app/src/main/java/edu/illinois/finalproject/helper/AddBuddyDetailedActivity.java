@@ -39,7 +39,7 @@ public class AddBuddyDetailedActivity extends AppCompatActivity {
         mBuddyName.setText(user.getName());
 
         mBuddyCourses = (TextView) findViewById(R.id.buddy_courses);
-        mBuddyCourses.setText(user.getCoursesStr());
+        mBuddyCourses.setText(user.extractCoursesStr());
 
         mBuddyLocation = (TextView) findViewById(R.id.buddy_location);
         mBuddyLocation.setText(user.getLocation());
