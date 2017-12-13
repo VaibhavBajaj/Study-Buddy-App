@@ -20,17 +20,17 @@ import edu.illinois.finalproject.home.HomeActivity;
 import edu.illinois.finalproject.home.adapter.BuddyAdapter;
 import edu.illinois.finalproject.parser.User;
 
-public class BuddyDetailedActivity extends AppCompatActivity {
+public class AddBuddyDetailedActivity extends AppCompatActivity {
 
     private TextView mBuddyName;
     private TextView mBuddyCourses;
     private TextView mBuddyLocation;
-    private Button mRemoveBuddyButton;
+    private Button mAddBuddyButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.detailed_buddy_activity);
+        setContentView(R.layout.detailed_add_buddy_activity);
 
         Intent intent = getIntent();
         final User user = intent.getParcelableExtra(BuddyAdapter.USER_KEY);
@@ -44,13 +44,16 @@ public class BuddyDetailedActivity extends AppCompatActivity {
         mBuddyLocation = (TextView) findViewById(R.id.buddy_location);
         mBuddyLocation.setText(user.getLocation());
 
-        mRemoveBuddyButton = (Button) findViewById(R.id.remove_buddy_button);
-        mRemoveBuddyButton.setOnClickListener(new View.OnClickListener() {
+        mAddBuddyButton = (Button) findViewById(R.id.add_buddy_button);
+        mAddBuddyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 List<String> buddyList = UserSessionManager
-                        .getUser(BuddyDetailedActivity.this).getBuddies();
-                buddyList.remove(user.getId());
+                        .getUser(AddBuddyDetailedActivity.this).getBuddies();
+                if (!buddyList.contains(user.getId())) {
+                    buddyList.add(user.getId());
+                }
+
                 Map<String, Object> buddyMap = new HashMap<>();
                 buddyMap.put("buddies", buddyList);
 
@@ -60,7 +63,7 @@ public class BuddyDetailedActivity extends AppCompatActivity {
                         .child(auth.getUid())
                         .updateChildren(buddyMap);
 
-                Intent launchBuddyTabIntent = new Intent(BuddyDetailedActivity.this,
+                Intent launchBuddyTabIntent = new Intent(AddBuddyDetailedActivity.this,
                         HomeActivity.class);
                 launchBuddyTabIntent.putExtra(HomeActivity.TAB_KEY, HomeActivity.BUDDY_TAB);
                 startActivity(launchBuddyTabIntent);

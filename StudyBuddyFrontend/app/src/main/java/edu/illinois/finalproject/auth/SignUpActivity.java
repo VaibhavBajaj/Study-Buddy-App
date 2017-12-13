@@ -61,11 +61,12 @@ public class SignUpActivity extends AppCompatActivity {
                 }
                 String userLocation = mLocationSpinner.getSelectedItem().toString();
                 User currentUser = new User(
-                        mAuth.getUid(),             // Id
-                        new ArrayList<String>(),    // Courses
-                        new ArrayList<String>(),    // Buddies
-                        new ArrayList<String>(),    // Meetings
-                        userLocation                // Location
+                        mAuth.getUid(),                             // Id
+                        mAuth.getCurrentUser().getDisplayName(),    // Name
+                        new ArrayList<String>(),                    // Courses
+                        new ArrayList<String>(),                    // Buddies
+                        new ArrayList<String>(),                    // Meetings
+                        userLocation                                // Location
                 );
 
                 final FirebaseDatabase db = FirebaseDatabase.getInstance();

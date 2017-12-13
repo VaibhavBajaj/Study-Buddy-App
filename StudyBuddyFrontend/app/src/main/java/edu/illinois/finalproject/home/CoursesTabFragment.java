@@ -51,11 +51,11 @@ public class CoursesTabFragment extends Fragment {
         mContext = returnView.getContext();
         mUser = UserSessionManager.getUser(mContext);
         mCourseList = new ArrayList<>();
+        initCourseList();
 
         RecyclerView courseRecyclerView = (RecyclerView) returnView
                 .findViewById(R.id.recycler_course_list);
         mCourseAdapter = new CourseAdapter(mCourseList);
-        initCourseList();
 
         courseRecyclerView.setAdapter(mCourseAdapter);
         courseRecyclerView.setLayoutManager(

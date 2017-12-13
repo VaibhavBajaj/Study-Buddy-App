@@ -6,9 +6,10 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User implements Parcelable {
 
     private String id;
+    private String name;
     private List<String> courses;
     private List<String> buddies;
     private List<String> meetings;
@@ -16,14 +17,36 @@ public class User {
 
     public User() {}
 
-    public User(String id, List<String> courses, List<String> buddies, List<String> meetings,
-                String location) {
+    public User(String id, String name, List<String> courses, List<String> buddies,
+                List<String> meetings, String location) {
         this.id = id;
+        this.name = name;
         this.courses = courses;
         this.buddies = buddies;
         this.meetings = meetings;
         this.location = location;
     }
+
+    protected User(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        courses = in.createStringArrayList();
+        buddies = in.createStringArrayList();
+        meetings = in.createStringArrayList();
+        location = in.readString();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -35,6 +58,25 @@ public class User {
         }
 
         return courses;
+    }
+
+    private String extractCourseStr(String course) {
+        String[] courseParts = course.split("/");
+        return courseParts[0] + " " + courseParts[1];
+    }
+
+    public String getCoursesStr() {
+        if (courses == null || courses.size() == 0) {
+            return "None registered";
+        }
+
+        StringBuilder coursesStr = new StringBuilder();
+        for (int i = 0; i < courses.size() - 1; i++) {
+            coursesStr.append(extractCourseStr(courses.get(i)));
+            coursesStr.append(", ");
+        }
+        coursesStr.append(extractCourseStr(courses.get(courses.size() - 1)));
+        return coursesStr.toString();
     }
 
     public List<String> getBuddies() {
@@ -55,5 +97,24 @@ public class User {
         }
 
         return meetings;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
+        parcel.writeString(name);
+        parcel.writeStringList(courses);
+        parcel.writeStringList(buddies);
+        parcel.writeStringList(meetings);
+        parcel.writeString(location);
     }
 }

@@ -41,8 +41,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
         final Context context = holder.itemView.getContext();
         final Section section = courseList.get(position);
 
-        Log.d(TAG, String.valueOf(position));
-
         String courseDisplayName = section.getDept_id() + " " + section.getCourse_id();
         holder.courseId.setText(courseDisplayName);
         holder.courseName.setText(section.getCourse_name());
