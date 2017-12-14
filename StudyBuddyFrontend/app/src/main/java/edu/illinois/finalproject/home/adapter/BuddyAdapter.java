@@ -16,6 +16,9 @@ import edu.illinois.finalproject.helper.AddBuddyDetailedActivity;
 import edu.illinois.finalproject.helper.BuddyDetailedActivity;
 import edu.illinois.finalproject.parser.User;
 
+/**
+ * Adapter used to parse buddy list to form recycler view
+ */
 public class BuddyAdapter extends RecyclerView.Adapter<BuddyAdapter.BuddyViewHolder> {
 
     private static final String TAG = BuddyAdapter.class.getSimpleName();
@@ -62,7 +65,7 @@ public class BuddyAdapter extends RecyclerView.Adapter<BuddyAdapter.BuddyViewHol
                 switch (selectedOption) {
                     case ALLOW_SELECTION:
                         user.setSelected(!user.isSelected());
-
+                        // Custom colors for when user selects a buddy he wants in meeting.
                         holder.itemView.setBackgroundColor(
                                 user.isSelected() ? Color.rgb(248, 255, 204) : Color.WHITE
                         );

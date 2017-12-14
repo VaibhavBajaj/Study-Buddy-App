@@ -25,6 +25,10 @@ import edu.illinois.finalproject.R;
 import edu.illinois.finalproject.UserSessionManager;
 import edu.illinois.finalproject.home.HomeActivity;
 
+/**
+ * Activity launched from HomeActivity if user is not authenticated.
+ * Contains methods needed for GoogleSignIn
+ */
 public class SignInActivity extends AppCompatActivity {
 
     private SignInButton mSignInButton;
@@ -39,6 +43,7 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
+        // The google api client is used for sign in and sign out.
         mGoogleApiClient = UserSessionManager.getGoogleApiClient(this);
 
         mAuth = FirebaseAuth.getInstance();
@@ -62,6 +67,10 @@ public class SignInActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * If sign in was success, we will give it FirebaseAuth else the page stays at Sign In.
+     * @param result    Result given by GoogleSignIn
+     */
     private void handleSignInResult(GoogleSignInResult result) {
         if (result.isSuccess()) {
             GoogleSignInAccount account = result.getSignInAccount();
@@ -71,6 +80,10 @@ public class SignInActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Completes initialization of FirebaseAuth with the unique Id from the Google Account
+     * @param account   Google account recieved from GoogleSignIn
+     */
     private void firebaseAuthWithGoogle(final GoogleSignInAccount account) {
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         mAuth.signInWithCredential(credential)
@@ -79,6 +92,7 @@ public class SignInActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
+                        // FirebaseAuth has now been intialized.
                         UserSessionManager.initUser(context);
                         Intent launchHomePageIntent = new Intent(context, HomeActivity.class);
                         context.startActivity(launchHomePageIntent);

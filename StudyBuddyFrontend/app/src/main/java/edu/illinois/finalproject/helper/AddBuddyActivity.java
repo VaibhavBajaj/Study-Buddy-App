@@ -20,6 +20,10 @@ import edu.illinois.finalproject.UserSessionManager;
 import edu.illinois.finalproject.home.adapter.BuddyAdapter;
 import edu.illinois.finalproject.parser.User;
 
+/**
+ * When user chooses to search for buddies, this activity is launched.
+ * This activity shows a list of optional buddies to User should he wish to add them.
+ */
 public class AddBuddyActivity extends AppCompatActivity {
 
     private static final String TAG = AddBuddyActivity.class.getSimpleName();
@@ -50,10 +54,14 @@ public class AddBuddyActivity extends AppCompatActivity {
         );
     }
 
+    /**
+     * From all users on firebase, initializes mBuddyOptionsList to list of users having
+     * common courses with current user.
+     */
     private void initBuddyList() {
 
         final List<User> allUsers = new ArrayList<>();
-        final List<String> currentUserIds = mUser.getBuddies();
+        final List<String> currentBuddyIds = mUser.getBuddies();
 
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         db.getReference("students").addValueEventListener(new ValueEventListener() {
@@ -63,8 +71,8 @@ public class AddBuddyActivity extends AppCompatActivity {
                     allUsers.add(child.getValue(User.class));
                 }
                 for (User user : allUsers) {
-                    if (!user.getId().equals(mUser.getId())
-                            && !currentUserIds.contains(user.getId())
+                    if (!user.getId().equals(mUser.getId())            // We don't want current user
+                            && !currentBuddyIds.contains(user.getId())  // Not already a buddy
                             && hasCommonCourses(user, mUser)) {
                         mBuddyOptionsList.add(user);
                     }
@@ -79,11 +87,17 @@ public class AddBuddyActivity extends AppCompatActivity {
         });
     }
 
-    private boolean hasCommonCourses(User user, User mUser) {
+    /**
+     * Checks if users have common courses
+     * @param currentUser   Current user
+     * @param buddyOption   Possible buddy
+     * @return  Whether or not they have common courses
+     */
+    private boolean hasCommonCourses(User currentUser, User buddyOption) {
 
-        for (String otherCourse : user.getCourses()) {
-            for (String userCourse : mUser.getCourses()) {
-                if (otherCourse.equals(userCourse)) {
+        for (String buddyCourse : buddyOption.getCourses()) {
+            for (String userCourse : currentUser.getCourses()) {
+                if (buddyCourse.equals(userCourse)) {
                     return true;
                 }
             }

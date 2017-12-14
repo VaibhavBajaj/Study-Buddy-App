@@ -6,6 +6,9 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * An individual user's details.
+ */
 public class User implements Parcelable {
 
     private String id;
@@ -62,11 +65,20 @@ public class User implements Parcelable {
         return courses;
     }
 
-    private String extractCourseStr(String course) {
-        String[] courseParts = course.split("/");
+    /**
+     * Extract course dept id and course id from courseApi
+     * @param courseApi    courseApi passed in
+     * @return             Course display name. Eg - "CS 196", "MATH 241" etc.
+     */
+    private String extractCourseStr(String courseApi) {
+        String[] courseParts = courseApi.split("/");
         return courseParts[0] + " " + courseParts[1];
     }
 
+    /**
+     * Method used to return courses as a comma-separated list
+     * @return courses as a comma-separated list
+     */
     public String extractCoursesStr() {
         if (courses == null || courses.size() == 0) {
             return "None registered";

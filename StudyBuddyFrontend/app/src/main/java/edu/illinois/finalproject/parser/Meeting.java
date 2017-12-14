@@ -5,6 +5,9 @@ import android.os.Parcelable;
 
 import java.util.List;
 
+/**
+ * An individual meeting's details.
+ */
 public class Meeting implements Parcelable {
 
     private String id;

@@ -20,6 +20,11 @@ import edu.illinois.finalproject.home.HomeActivity;
 import edu.illinois.finalproject.parser.Meeting;
 import edu.illinois.finalproject.parser.User;
 
+/**
+ * Activity launched when user clicks on a meeting in Meeting Tab.
+ * Gives details of meeting and the option to cancel the meeting.
+ * If cancelled, only current user is removed from meeting. It still exists for all other buddies.
+ */
 public class MeetingDetailedActivity extends AppCompatActivity {
 
     public static final String MEETING_KEY = "Meeting";

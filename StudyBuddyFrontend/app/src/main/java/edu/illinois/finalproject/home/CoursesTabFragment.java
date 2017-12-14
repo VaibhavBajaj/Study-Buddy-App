@@ -31,7 +31,9 @@ import edu.illinois.finalproject.home.adapter.CourseAdapter;
 import edu.illinois.finalproject.parser.Section;
 import edu.illinois.finalproject.parser.User;
 
-
+/**
+ * Tab fragment displaying all data pertaining to user courses.
+ */
 public class CoursesTabFragment extends Fragment {
 
     private static final String TAG = CoursesTabFragment.class.getSimpleName();
@@ -39,23 +41,24 @@ public class CoursesTabFragment extends Fragment {
 
     private CourseAdapter mCourseAdapter;
     private List<Section> mCourseList;
+    private User mUser;
 
     private Context mContext;
-    private User mUser;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View returnView =  inflater.inflate(R.layout.fragment_courses_tab, container,
                 false);
+
         mContext = returnView.getContext();
-        mUser = UserSessionManager.getUser(mContext);
         mCourseList = new ArrayList<>();
-        initCourseList();
+        mUser = UserSessionManager.getUser(mContext);
 
         RecyclerView courseRecyclerView = (RecyclerView) returnView
                 .findViewById(R.id.recycler_course_list);
         mCourseAdapter = new CourseAdapter(mCourseList);
+        updateCourseList();
 
         courseRecyclerView.setAdapter(mCourseAdapter);
         courseRecyclerView.setLayoutManager(
@@ -84,7 +87,7 @@ public class CoursesTabFragment extends Fragment {
      *
      * Once completed, it notifies the Course Recycler View
      */
-    private void initCourseList() {
+    public void updateCourseList() {
 
         if (mUser == null) {
             return;

@@ -29,16 +29,20 @@ import edu.illinois.finalproject.home.adapter.BuddyAdapter;
 import edu.illinois.finalproject.parser.Section;
 import edu.illinois.finalproject.parser.User;
 
+/**
+ * Tab fragment displaying all data pertaining to user buddies.
+ */
 public class BuddyTabFragment extends Fragment {
 
     private static final String TAG = BuddyTabFragment.class.getSimpleName();
 
     private BuddyAdapter mBuddyAdapter;
     private List<User> mBuddyList;
-    private Button mAddBuddyButton;
 
+    private Button mAddBuddyButton;
     private Context mContext;
     private User mUser;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -46,20 +50,18 @@ public class BuddyTabFragment extends Fragment {
         View returnView = inflater.inflate(R.layout.fragment_buddy_tab, container,
                 false);
         mContext = returnView.getContext();
-
-        mUser = UserSessionManager.getUser(mContext);
         mBuddyList = new ArrayList<>();
-        initBuddyList();
+        mUser = UserSessionManager.getUser(mContext);
 
         RecyclerView buddyRecyclerView = (RecyclerView) returnView
                 .findViewById(R.id.recycler_buddy_list);
+        updateBuddyList();
         mBuddyAdapter = new BuddyAdapter(mBuddyList, BuddyAdapter.LAUNCH_REMOVE_BUDDY_PAGE);
 
         buddyRecyclerView.setAdapter(mBuddyAdapter);
         buddyRecyclerView.setLayoutManager(
                 new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false)
         );
-
 
         mAddBuddyButton = (Button) returnView.findViewById(R.id.find_buddy_button);
         mAddBuddyButton.setOnClickListener(new View.OnClickListener() {
@@ -72,10 +74,10 @@ public class BuddyTabFragment extends Fragment {
         return returnView;
     }
 
-    private void initBuddyList() {
-        if (mUser == null) {
-            return;
-        }
+    /**
+     * Updates list of buddies to buddies stored on user's firebase and notifies adapter of changes.
+     */
+    private void updateBuddyList() {
 
         List<String> buddies = mUser.getBuddies();
         final FirebaseDatabase db = FirebaseDatabase.getInstance();

@@ -31,6 +31,10 @@ import edu.illinois.finalproject.parser.Department;
 import edu.illinois.finalproject.parser.Section;
 import edu.illinois.finalproject.parser.User;
 
+/**
+ * If user chooses to add a course, this activity is launched.
+ * Allows user to choose department, course and section of course for addition to user course list.
+ */
 public class AddCourseActivity extends AppCompatActivity {
 
     private static final String TAG = AddCourseActivity.class.getSimpleName();
@@ -68,6 +72,7 @@ public class AddCourseActivity extends AppCompatActivity {
         final ArrayAdapter<Section> sectionAdapter = getAdapter(sectionList);
         mSectionSpinner.setAdapter(sectionAdapter);
 
+        // Do not allow user to change course or section if department is not chosen.
         mCourseSpinner.setEnabled(false);
         mSectionSpinner.setEnabled(false);
 
@@ -132,6 +137,11 @@ public class AddCourseActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Generic method of creating array adapter for spinner.
+     * @param initList      List to be displayed in spinner
+     * @return              Returns an appropriate ArrayAdapter
+     */
     @NonNull
     private <T> ArrayAdapter<T> getAdapter(List<T> initList) {
         final ArrayAdapter<T> adapter = new ArrayAdapter<>(
@@ -143,6 +153,12 @@ public class AddCourseActivity extends AppCompatActivity {
         return adapter;
     }
 
+    /**
+     * Updates department list by listeners from database and notifies adapter.
+     * Note: Do not use Generics. Slows speed drastically.
+     * @param adapter       ArrayAdapter to be notified of changes
+     * @param deptList      List of departments to be altered.
+     */
     private void updateDeptListFromDb(final ArrayAdapter<Department> adapter,
                                       final List<Department> deptList) {
         final DatabaseReference deptRef = db.getReference("departments");
@@ -162,9 +178,16 @@ public class AddCourseActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Updates course list by listeners from database and notifies adapter.
+     * Note: Do not use Generics. Slows speed drastically.
+     * @param adapter       ArrayAdapter to be notified of changes
+     * @param courseList    List of courses to be altered.
+     * @param queryApi      Specific qeury api for retrieving course list from database.
+     */
     private void updateCourseListFromDb(final ArrayAdapter<Course> adapter,
                                       final List<Course> courseList, String queryApi) {
-        Log.d(TAG, "Query launched with queryApi: " + queryApi);
+
         final DatabaseReference courseRef = db.getReference("courses").child(queryApi);
         courseRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -183,6 +206,13 @@ public class AddCourseActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Updates section list by listeners from database and notifies adapter.
+     * Note: Do not use Generics. Slows speed drastically.
+     * @param adapter       ArrayAdapter to be notified of changes
+     * @param sectionList   List of sections to be altered
+     * @param queryApi      Specific qeury api for retrieving section list from database.
+     */
     private void updateSectionListFromDb(final ArrayAdapter<Section> adapter,
                                       final List<Section> sectionList, String queryApi) {
         final DatabaseReference sectionRef = db.getReference("sections").child(queryApi);

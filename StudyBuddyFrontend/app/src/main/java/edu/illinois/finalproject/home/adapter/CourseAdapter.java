@@ -15,6 +15,9 @@ import edu.illinois.finalproject.R;
 import edu.illinois.finalproject.helper.CourseDetailedActivity;
 import edu.illinois.finalproject.parser.Section;
 
+/**
+ * Adapter used to parse course list to form recycler view
+ */
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseViewHolder> {
 
     private static final String TAG = CourseAdapter.class.getSimpleName();

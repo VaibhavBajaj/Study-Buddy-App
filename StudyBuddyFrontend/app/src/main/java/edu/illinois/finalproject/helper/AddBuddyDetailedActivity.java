@@ -20,12 +20,17 @@ import edu.illinois.finalproject.home.HomeActivity;
 import edu.illinois.finalproject.home.adapter.BuddyAdapter;
 import edu.illinois.finalproject.parser.User;
 
+/**
+ * Activity launched when user clicks on a buddy in the AddBuddyActivity list of buddies.
+ */
 public class AddBuddyDetailedActivity extends AppCompatActivity {
 
     private TextView mBuddyName;
     private TextView mBuddyCourses;
     private TextView mBuddyLocation;
     private Button mAddBuddyButton;
+
+    private User mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,7 @@ public class AddBuddyDetailedActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         final User user = intent.getParcelableExtra(BuddyAdapter.USER_KEY);
+        mUser = UserSessionManager.getUser(AddBuddyDetailedActivity.this);
 
         mBuddyName = (TextView) findViewById(R.id.buddy_name);
         mBuddyName.setText(user.getName());
@@ -48,17 +54,18 @@ public class AddBuddyDetailedActivity extends AppCompatActivity {
         mAddBuddyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                List<String> buddyList = UserSessionManager
-                        .getUser(AddBuddyDetailedActivity.this).getBuddies();
+                List<String> buddyList = mUser.getBuddies();
                 if (!buddyList.contains(user.getId())) {
                     buddyList.add(user.getId());
                 }
 
+                // Map needed to update firebase reference.
                 Map<String, Object> buddyMap = new HashMap<>();
                 buddyMap.put("buddies", buddyList);
 
                 final FirebaseDatabase db = FirebaseDatabase.getInstance();
                 final FirebaseAuth auth = FirebaseAuth.getInstance();
+
                 db.getReference("students")
                         .child(auth.getUid())
                         .updateChildren(buddyMap);

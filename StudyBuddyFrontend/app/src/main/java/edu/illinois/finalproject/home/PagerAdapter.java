@@ -4,6 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+/**
+ * Adapter used to show different tabs on Home page.
+ */
 public class PagerAdapter extends FragmentStatePagerAdapter {
 
     int mNubOfTabs;

@@ -30,6 +30,10 @@ import edu.illinois.finalproject.home.adapter.BuddyAdapter;
 import edu.illinois.finalproject.parser.Meeting;
 import edu.illinois.finalproject.parser.User;
 
+/**
+ * If user wishes to add a meeting, this activity is launched.
+ * Allows user to set meeting details and choose buddies with whom to hold meeting.
+ */
 public class AddMeetingActivity extends AppCompatActivity {
 
     private static final int MIN_BUDDIES = 2;
@@ -104,6 +108,15 @@ public class AddMeetingActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Pushes given data to firebase as a Meeting object with a unique id recieved from Firebase.
+     * @param name                  Name of meeting
+     * @param location              Location of meeting
+     * @param time                  Time of meeting
+     * @param buddiesChosenIds      Ids of buddies with whom meeting will take place
+     * @param buddiesChosenNames    Name of buddies with whom meeting will take place
+     * @param buddiesChosen         User objects of buddies with whom meeting will take place
+     */
     private void pushDataToFirebase(String name, String location, String time,
                                     List<String> buddiesChosenIds, List<String> buddiesChosenNames,
                                     List<User> buddiesChosen) {
@@ -124,6 +137,14 @@ public class AddMeetingActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * If any of passed data is invalid, give an appropriate error.
+     * @param name              Name of meeting
+     * @param location              Location of meeting
+     * @param time                  Time of meeting
+     * @param buddiesChosenIds      Ids of buddies with whom meeting will take place
+     * @return  Whether data is valid or not.
+     */
     private boolean checkInvalidInput(String name, String location, String time,
                                       List<String> buddiesChosenIds) {
         if (name.length() <= 0) {
@@ -146,6 +167,9 @@ public class AddMeetingActivity extends AppCompatActivity {
         return false;
     }
 
+    /**
+     * Initialize list of buddies who user can choose to hold meeting with.
+     */
     private void initBuddyList() {
         if (mUser == null) {
             return;

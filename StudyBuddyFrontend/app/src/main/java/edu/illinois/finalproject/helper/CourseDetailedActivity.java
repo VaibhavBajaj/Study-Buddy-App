@@ -23,6 +23,10 @@ import edu.illinois.finalproject.UserSessionManager;
 import edu.illinois.finalproject.home.HomeActivity;
 import edu.illinois.finalproject.parser.Section;
 
+/**
+ * Activity launched when user clicks on a course in Course Tab.
+ * Gives details of course and the option to remove the course
+ */
 public class CourseDetailedActivity extends AppCompatActivity {
 
     public static final String COURSE_KEY = "Course";

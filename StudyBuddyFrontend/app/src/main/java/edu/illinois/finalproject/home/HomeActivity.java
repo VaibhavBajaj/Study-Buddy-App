@@ -15,10 +15,15 @@ import edu.illinois.finalproject.R;
 import edu.illinois.finalproject.UserSessionManager;
 import edu.illinois.finalproject.auth.SignInActivity;
 
+/**
+ * Base class launched on app start.
+ * This class is a holder of tab fragments which are individual views containing user information.
+ */
 public class HomeActivity extends AppCompatActivity {
 
     public static final String TAB_KEY = "CurrentTab";
 
+    // Constants used with intents to launch different tabs.
     public static final int HOME_TAB = 0;
     public static final int COURSES_TAB = 1;
     public static final int BUDDY_TAB = 2;
@@ -42,6 +47,7 @@ public class HomeActivity extends AppCompatActivity {
             return;
         }
 
+        // Add tabs to be shown to user
         mTabLayout = (TabLayout) findViewById(R.id.home_tabs);
 
         mTabLayout.addTab(mTabLayout.newTab().setText("Home"));
@@ -55,6 +61,7 @@ public class HomeActivity extends AppCompatActivity {
                 mTabLayout.getTabCount());
         viewPager.setAdapter(adapter);
 
+        // Set current tab based on tab passed in intent. If none passed, launch Home tab.
         Intent intent = getIntent();
         viewPager.setCurrentItem(intent.getIntExtra(TAB_KEY, HOME_TAB));
 

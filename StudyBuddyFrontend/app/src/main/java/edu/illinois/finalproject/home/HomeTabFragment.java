@@ -20,6 +20,10 @@ import edu.illinois.finalproject.R;
 import edu.illinois.finalproject.parser.User;
 import edu.illinois.finalproject.UserSessionManager;
 
+/**
+ * Base tab fragment launched when app launches.
+ * It is the Welcome page containing basic data about user.
+ */
 public class HomeTabFragment extends Fragment {
 
     private static final String TAG = HomeTabFragment.class.getSimpleName();
@@ -53,6 +57,7 @@ public class HomeTabFragment extends Fragment {
         mWelcomeText = (TextView) returnView.findViewById(R.id.welcome_text);
         mWelcomeText.setText(welcomeText);
 
+        // Parse and display user's google account profile image.
         mProfileImage = (ImageView) returnView.findViewById(R.id.profile_image);
         Picasso.with(mContext).load(mFirebaseUser.getPhotoUrl()).into(mProfileImage);
         mProfileImage.setVisibility(ImageView.VISIBLE);

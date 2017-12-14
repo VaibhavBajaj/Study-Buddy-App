@@ -16,6 +16,9 @@ import edu.illinois.finalproject.R;
 import edu.illinois.finalproject.helper.MeetingDetailedActivity;
 import edu.illinois.finalproject.parser.Meeting;
 
+/**
+ * Adapter used to parse meeting list to form recycler view
+ */
 public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingViewHolder> {
 
     private static final String TAG = MeetingAdapter.class.getSimpleName();

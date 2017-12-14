@@ -20,6 +20,10 @@ import edu.illinois.finalproject.home.HomeActivity;
 import edu.illinois.finalproject.home.adapter.BuddyAdapter;
 import edu.illinois.finalproject.parser.User;
 
+/**
+ * Activity launched when user clicks on a buddy in Buddy Tab.
+ * Gives details of buddy and the option to remove the buddy
+ */
 public class BuddyDetailedActivity extends AppCompatActivity {
 
     private TextView mBuddyName;
@@ -45,6 +49,9 @@ public class BuddyDetailedActivity extends AppCompatActivity {
         mBuddyLocation.setText(user.getLocation());
 
         mRemoveBuddyButton = (Button) findViewById(R.id.remove_buddy_button);
+
+        // If user chooses to remove buddy, remove buddy from user buddy list and update firebase
+        // with new list.
         mRemoveBuddyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

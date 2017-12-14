@@ -22,6 +22,10 @@ import edu.illinois.finalproject.R;
 import edu.illinois.finalproject.parser.User;
 import edu.illinois.finalproject.home.HomeActivity;
 
+/**
+ * If we don't have any information about the user on Firebase, this activity is launched
+ * from UserSessionManager to get User information and update Firebase.
+ */
 public class SignUpActivity extends AppCompatActivity {
 
     private Spinner mLocationSpinner;
@@ -59,6 +63,8 @@ public class SignUpActivity extends AppCompatActivity {
                     mLocationSpinner.requestFocus();
                     return;
                 }
+
+                // Create user and push to firebase.
                 String userLocation = mLocationSpinner.getSelectedItem().toString();
                 User currentUser = new User(
                         mAuth.getUid(),                             // Id
@@ -80,5 +86,14 @@ public class SignUpActivity extends AppCompatActivity {
                 context.startActivity(launchHomeIntent);
             }
         });
+    }
+
+    /**
+     * Prevent user from return to Home Page without signing up.
+     */
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "Please complete signing up first", Toast.LENGTH_LONG)
+                .show();
     }
 }
