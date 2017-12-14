@@ -64,7 +64,7 @@ public class BuddyAdapter extends RecyclerView.Adapter<BuddyAdapter.BuddyViewHol
                         user.setSelected(!user.isSelected());
 
                         holder.itemView.setBackgroundColor(
-                                user.isSelected() ? Color.rgb(248, 255, 204) : holder.itemView.getSolidColor()
+                                user.isSelected() ? Color.rgb(248, 255, 204) : Color.WHITE
                         );
                         break;
                     case LAUNCH_ADD_BUDDY_PAGE:

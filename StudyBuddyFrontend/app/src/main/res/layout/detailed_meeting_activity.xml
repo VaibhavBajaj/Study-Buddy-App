@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.illinois.finalproject.helper.AddBuddyDetailedActivity">
+
+    <TextView
+        android:id="@+id/meeting_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/meeting_name"
+        android:textSize="35sp"
+        android:padding="15dp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/meeting_location"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/meeting_location"
+        android:text="@string/meeting_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:padding="15dp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@id/meeting_name"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/meeting_time" />
+
+    <TextView
+        android:id="@+id/meeting_time"
+        android:text="@string/meeting_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:padding="15dp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@id/meeting_buddy_names"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/meeting_location" />
+
+    <TextView
+        android:id="@+id/meeting_buddy_names"
+        android:text="@string/meeting_buddy_names"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:padding="15dp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@id/cancel_meeting_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/meeting_time" />
+
+    <Button
+        android:id="@+id/cancel_meeting_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_margin="15dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="@string/cancel_meeting_button"
+        android:textColor="@color/btnColor"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buddy_courses" />
+
+</android.support.constraint.ConstraintLayout>

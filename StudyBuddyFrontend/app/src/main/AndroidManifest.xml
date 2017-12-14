@@ -23,8 +23,9 @@
         <activity android:name=".helper.AddMeetingActivity" />
         <activity android:name=".helper.AddBuddyActivity" />
         <activity android:name=".helper.AddBuddyDetailedActivity" />
-        <activity android:name=".helper.CourseDetailedActivity"></activity>
+        <activity android:name=".helper.CourseDetailedActivity" />
         <activity android:name=".helper.BuddyDetailedActivity" />
+        <activity android:name=".helper.MeetingDetailedActivity"></activity>
     </application>
 
 </manifest>

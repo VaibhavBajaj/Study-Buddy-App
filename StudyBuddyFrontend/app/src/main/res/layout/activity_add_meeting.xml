@@ -80,6 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/add_meeting_time_hint"
+        android:inputType="time"
         app:layout_constraintBottom_toBottomOf="@id/add_meeting_time_label"
         app:layout_constraintLeft_toLeftOf="@id/add_meeting_location_text"/>
 

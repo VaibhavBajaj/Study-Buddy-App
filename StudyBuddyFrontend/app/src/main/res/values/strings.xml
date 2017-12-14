@@ -59,5 +59,7 @@
     <string name="course_instructors">Instructors:</string>
     <string name="remove_buddy_button">Remove Buddy</string>
     <string name="meeting_buddy_list_label">Choose Buddies:</string>
+    <string name="meeting_buddy_names">Buddies Coming</string>
+    <string name="cancel_meeting_button">Cancel Meeting</string>
 
 </resources>

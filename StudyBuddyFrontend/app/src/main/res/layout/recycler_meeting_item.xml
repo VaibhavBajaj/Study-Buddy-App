@@ -24,6 +24,7 @@
         android:padding="4dp"
         android:text="@string/meeting_location"
         android:textSize="18sp"
+        android:textStyle="italic"
         app:layout_constraintLeft_toLeftOf="@id/recycler_meeting_name"
         app:layout_constraintTop_toBottomOf="@+id/recycler_meeting_name" />
 
@@ -34,7 +35,19 @@
         android:padding="4dp"
         android:text="@string/meeting_time"
         android:textSize="18sp"
-        app:layout_constraintLeft_toLeftOf="@id/recycler_meeting_location"
-        app:layout_constraintTop_toBottomOf="@+id/recycler_meeting_location" />
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="@id/recycler_meeting_location"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/recycler_meeting_buddy_names"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:text="@string/meeting_buddy_names"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        app:layout_constraintTop_toBottomOf="@id/recycler_meeting_location"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

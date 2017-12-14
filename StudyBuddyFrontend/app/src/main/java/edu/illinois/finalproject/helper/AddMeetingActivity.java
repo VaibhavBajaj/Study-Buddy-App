@@ -78,12 +78,15 @@ public class AddMeetingActivity extends AppCompatActivity {
 
                 List<User> buddiesChosen = new ArrayList<>();
                 List<String> buddiesChosenIds = new ArrayList<>();
+                List<String> buddiesChosenNames = new ArrayList<>();
                 buddiesChosen.add(UserSessionManager.getUser(AddMeetingActivity.this));
                 buddiesChosenIds.add(mAuth.getUid());
+                buddiesChosenNames.add(mUser.getName());
                 for (User buddy : mBuddyList) {
                     if (buddy.isSelected()) {
                         buddiesChosen.add(buddy);
                         buddiesChosenIds.add(buddy.getId());
+                        buddiesChosenNames.add(buddy.getName());
                     }
                 }
 
@@ -91,14 +94,34 @@ public class AddMeetingActivity extends AppCompatActivity {
                     return;
                 }
 
-                Meeting meetingAdded = new Meeting(name, location, time, buddiesChosenIds);
-                pushDataToFirebase(meetingAdded, buddiesChosen);
+                pushDataToFirebase(name, location, time, buddiesChosenIds,
+                        buddiesChosenNames, buddiesChosen);
                 Intent launchMeetingTabIntent = new Intent(AddMeetingActivity.this,
                         HomeActivity.class);
                 launchMeetingTabIntent.putExtra(HomeActivity.TAB_KEY, HomeActivity.MEETING_TAB);
                 startActivity(launchMeetingTabIntent);
             }
         });
+    }
+
+    private void pushDataToFirebase(String name, String location, String time,
+                                    List<String> buddiesChosenIds, List<String> buddiesChosenNames,
+                                    List<User> buddiesChosen) {
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference dbRef = db.getReference("meetings").push();
+
+        Meeting meetingAdded = new Meeting(dbRef.getKey(), name, location, time, buddiesChosenIds,
+                buddiesChosenNames);
+        dbRef.setValue(meetingAdded);
+
+        for (User user : buddiesChosen) {
+            Map<String, Object> meetingMap = new HashMap<>();
+            List<String> userMeetings = user.getMeetings();
+            userMeetings.add(dbRef.getKey());
+
+            meetingMap.put(user.getId(), userMeetings);
+            db.getReference("studentMeetings").updateChildren(meetingMap);
+        }
     }
 
     private boolean checkInvalidInput(String name, String location, String time,
@@ -121,22 +144,6 @@ public class AddMeetingActivity extends AppCompatActivity {
             return true;
         }
         return false;
-    }
-
-    private void pushDataToFirebase(Meeting meetingAdded, List<User> buddiesChosen) {
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-
-        DatabaseReference dbRef = db.getReference("meetings").push();
-        dbRef.setValue(meetingAdded);
-
-        for (User user : buddiesChosen) {
-            Map<String, Object> meetingMap = new HashMap<>();
-            List<String> userMeetings = user.getMeetings();
-            userMeetings.add(dbRef.getKey());
-
-            meetingMap.put(user.getId(), userMeetings);
-            db.getReference("studentMeetings").updateChildren(meetingMap);
-        }
     }
 
     private void initBuddyList() {
