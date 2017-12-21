@@ -93,7 +93,7 @@ public class SignInActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         // FirebaseAuth has now been intialized.
-                        UserSessionManager.initUser(context);
+                        UserSessionManager.initUser(SignInActivity.this);
                         Intent launchHomePageIntent = new Intent(context, HomeActivity.class);
                         context.startActivity(launchHomePageIntent);
                     } else {

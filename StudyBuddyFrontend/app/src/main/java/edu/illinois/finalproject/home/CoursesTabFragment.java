@@ -21,28 +21,27 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import edu.illinois.finalproject.UserSessionManager;
 import edu.illinois.finalproject.helper.AddCourseActivity;
 import edu.illinois.finalproject.R;
 import edu.illinois.finalproject.home.adapter.CourseAdapter;
+import edu.illinois.finalproject.listener.Observer;
+import edu.illinois.finalproject.listener.Subject;
 import edu.illinois.finalproject.parser.Section;
 import edu.illinois.finalproject.parser.User;
 
 /**
  * Tab fragment displaying all data pertaining to user courses.
  */
-public class CoursesTabFragment extends Fragment {
+public class CoursesTabFragment extends Fragment implements Observer {
 
     private static final String TAG = CoursesTabFragment.class.getSimpleName();
-    private Button mAddCourseButton;
 
     private CourseAdapter mCourseAdapter;
     private List<Section> mCourseList;
-    private User mUser;
 
+    private Button mAddCourseButton;
     private Context mContext;
 
     @Override
@@ -53,12 +52,11 @@ public class CoursesTabFragment extends Fragment {
 
         mContext = returnView.getContext();
         mCourseList = new ArrayList<>();
-        mUser = UserSessionManager.getUser(mContext);
+        update();
 
         RecyclerView courseRecyclerView = (RecyclerView) returnView
                 .findViewById(R.id.recycler_course_list);
         mCourseAdapter = new CourseAdapter(mCourseList);
-        updateCourseList();
 
         courseRecyclerView.setAdapter(mCourseAdapter);
         courseRecyclerView.setLayoutManager(
@@ -68,7 +66,6 @@ public class CoursesTabFragment extends Fragment {
 
         // Once UserSessionManager says User's data from Firebase is retrieved, we call initCourses
         // This updates the recycler view
-
         mAddCourseButton = (Button) returnView.findViewById(R.id.find_course_button);
         mAddCourseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +74,8 @@ public class CoursesTabFragment extends Fragment {
                 startActivity(launchAddCourseIntent);
             }
         });
+
+        Subject.addObserver(this);
 
         return returnView;
     }
@@ -87,21 +86,27 @@ public class CoursesTabFragment extends Fragment {
      *
      * Once completed, it notifies the Course Recycler View
      */
-    public void updateCourseList() {
-
-        if (mUser == null) {
+    @Override
+    public void update() {
+        User user = UserSessionManager.getUser(mContext);
+        if(user == null) {
             return;
         }
+        Log.d(TAG, "Update called.");
 
-        List<String> courseApis = mUser.getCourses();
+        List<String> courseApis = user.getCourses();
         final FirebaseDatabase db = FirebaseDatabase.getInstance();
 
+        Log.d(TAG, "Refreshed.");
         for (String courseApi : courseApis) {
             final DatabaseReference dbRef = db.getReference("sections").child(courseApi);
             dbRef.addValueEventListener(new ValueEventListener(){
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     mCourseList.add(dataSnapshot.getValue(Section.class));
+                    Log.d(TAG, "Course List item count: " + mCourseList.size());
+                    Log.d(TAG, "Course List: " + mCourseList.toString());
+                    Log.d(TAG, "Course adapter item count: " + mCourseAdapter.getItemCount());
                     mCourseAdapter.notifyDataSetChanged();
                 }
                 @Override

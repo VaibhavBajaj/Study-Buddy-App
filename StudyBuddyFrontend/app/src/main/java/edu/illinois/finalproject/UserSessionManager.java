@@ -23,14 +23,19 @@ import edu.illinois.finalproject.auth.SignInActivity;
 import edu.illinois.finalproject.auth.SignUpActivity;
 import edu.illinois.finalproject.home.BuddyTabFragment;
 import edu.illinois.finalproject.home.CoursesTabFragment;
+import edu.illinois.finalproject.home.HomeTabFragment;
+import edu.illinois.finalproject.home.MeetingTabFragment;
+import edu.illinois.finalproject.listener.Subject;
 import edu.illinois.finalproject.parser.User;
 
 /**
  * Class that gets and holds user data, and performs all operations with regards to user session
  */
-public class UserSessionManager implements GoogleApiClient.OnConnectionFailedListener {
+public class UserSessionManager extends Subject
+        implements GoogleApiClient.OnConnectionFailedListener {
 
     private static User mUser = null;
+    private static boolean initCalled = false;
     private static final String TAG = UserSessionManager.class.getSimpleName();
 
     /**
@@ -38,9 +43,11 @@ public class UserSessionManager implements GoogleApiClient.OnConnectionFailedLis
      * @param context   Context needed for starting intents.
      */
     public static void initUser(final Context context) {
+        initCalled = true;
         FirebaseAuth auth = FirebaseAuth.getInstance();
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("students")
                 .child(auth.getUid());
+        Log.d(TAG, "Init user called.");
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -49,6 +56,7 @@ public class UserSessionManager implements GoogleApiClient.OnConnectionFailedLis
                     context.startActivity(launchSignUpIntent);
                 } else {
                     mUser = dataSnapshot.getValue(User.class);
+                    Subject.dataChanged();
                 }
             }
 
@@ -63,7 +71,7 @@ public class UserSessionManager implements GoogleApiClient.OnConnectionFailedLis
      * @return          User object retrieved from Firebase
      */
     public static User getUser(final Context context) {
-        if (mUser == null) {
+        if (mUser == null && !initCalled) {
             initUser(context);
         }
 

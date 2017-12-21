@@ -17,6 +17,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 import edu.illinois.finalproject.R;
+import edu.illinois.finalproject.listener.Observer;
+import edu.illinois.finalproject.listener.Subject;
 import edu.illinois.finalproject.parser.User;
 import edu.illinois.finalproject.UserSessionManager;
 
@@ -24,7 +26,7 @@ import edu.illinois.finalproject.UserSessionManager;
  * Base tab fragment launched when app launches.
  * It is the Welcome page containing basic data about user.
  */
-public class HomeTabFragment extends Fragment {
+public class HomeTabFragment extends Fragment implements Observer {
 
     private static final String TAG = HomeTabFragment.class.getSimpleName();
 
@@ -35,7 +37,6 @@ public class HomeTabFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseUser mFirebaseUser;
     private GoogleApiClient mGoogleApiClient;
-    private User mUser = null;
 
     private Context mContext;
 
@@ -49,8 +50,6 @@ public class HomeTabFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mAuth.getCurrentUser();
         mGoogleApiClient = UserSessionManager.getGoogleApiClient(mContext);
-
-        mUser = UserSessionManager.getUser(mContext);
 
         String welcomeText = String.format(getString(R.string.welcome_text),
                 mFirebaseUser.getDisplayName());
@@ -70,7 +69,17 @@ public class HomeTabFragment extends Fragment {
             }
         });
 
+        Subject.addObserver(this);
+
         // Inflate the layout for this fragment
         return returnView;
+    }
+
+    @Override
+    public void update() {
+        User user = UserSessionManager.getUser(mContext);
+        if (user == null) {
+            return;
+        }
     }
 }

@@ -4,6 +4,7 @@ package edu.illinois.finalproject.home;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,8 +26,9 @@ import java.util.List;
 import edu.illinois.finalproject.R;
 import edu.illinois.finalproject.UserSessionManager;
 import edu.illinois.finalproject.helper.AddMeetingActivity;
-import edu.illinois.finalproject.home.adapter.BuddyAdapter;
 import edu.illinois.finalproject.home.adapter.MeetingAdapter;
+import edu.illinois.finalproject.listener.Observer;
+import edu.illinois.finalproject.listener.Subject;
 import edu.illinois.finalproject.parser.Meeting;
 import edu.illinois.finalproject.parser.User;
 
@@ -36,7 +38,6 @@ import edu.illinois.finalproject.parser.User;
  */
 public class MeetingTabFragment extends Fragment {
 
-    private User mUser;
     private List<Meeting> mMeetingList;
     private MeetingAdapter mMeetingAdapter;
 
@@ -47,14 +48,11 @@ public class MeetingTabFragment extends Fragment {
     private Button mAddMeetingButton;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View returnView = inflater.inflate(R.layout.fragment_meeting_tab, container,
                 false);
         mContext = returnView.getContext();
-
-
-        mUser = UserSessionManager.getUser(mContext);
         mMeetingList = new ArrayList<>();
         initMeetingList();
 
@@ -75,6 +73,7 @@ public class MeetingTabFragment extends Fragment {
                 startActivity(launchAddMeetingIntent);
             }
         });
+
         return returnView;
     }
 
@@ -115,4 +114,5 @@ public class MeetingTabFragment extends Fragment {
             });
         }
     }
+
 }
